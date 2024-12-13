@@ -51,23 +51,27 @@ module.exports = {
     new HtmlWebpackPlugin({
       template: "./src/index.html",
       minify: {
-        collapseWhitespace: true,
+        collapseWhitespace: true, // Уменьшаем HTML для production
       },
+      inject: "body", // Скрипт будет вставлен в конец body
     }),
     new MiniCssExtractPlugin({
       filename: "styles.[contenthash].css",
     }),
   ],
   devServer: {
-    static: "./dist",
-    port: 8080,
-    open: true,
-    hot: true,
-    liveReload: true,
+    static: "./dist", // Папка с результатами сборки
+    port: 8080, // Порт сервера
+    open: true, // Открытие браузера при запуске
+    hot: true, // Включение Hot Module Replacement (HMR)
+    liveReload: true, // Включение автообновления страницы при изменении файлов
+    watchFiles: {
+      paths: ["src/**/*.html", "src/**/*.js", "src/**/*.css"], // Следим за изменениями в HTML, JS и CSS файлах
+    },
   },
   optimization: {
     splitChunks: {
-      chunks: "all",
+      chunks: "all", // Разделение кода на чанки
     },
   },
 };

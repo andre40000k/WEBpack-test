@@ -1,4 +1,4 @@
-# Gulp Project
+# WebPack
 
 ## Описание проекта
 
@@ -20,11 +20,13 @@
 ```bash
     npm install
 ```
-3. **Запустите Gulp**:
+3. **Запустите WebPack**:
+
+ devmod
 ```bash
     npm start
 ```
- или
+ prodmod
 ```bash
-    gulp run
+    npm build
 ```
