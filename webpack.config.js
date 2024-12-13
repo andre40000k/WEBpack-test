@@ -4,7 +4,7 @@ const { CleanWebpackPlugin } = require("clean-webpack-plugin");
 const MiniCssExtractPlugin = require("mini-css-extract-plugin");
 
 module.exports = {
-  mode: "development", 
+  mode: "development",
   entry: "./src/index.js",
   output: {
     filename: "bundle.[contenthash].js",
@@ -51,22 +51,22 @@ module.exports = {
     new HtmlWebpackPlugin({
       template: "./src/index.html",
       minify: {
-        collapseWhitespace: true, 
+        collapseWhitespace: true,
       },
-      inject: "body", 
+      inject: "body",
     }),
     new MiniCssExtractPlugin({
       filename: "styles.[contenthash].css",
     }),
   ],
   devServer: {
-    static: "./dist", 
+    static: "./dist",
     port: 8080,
-    open: true, 
-    hot: true, 
-    liveReload: true, 
+    open: true,
+    hot: true,
+    liveReload: true,
     watchFiles: {
-      paths: ["src/**/*.html", "src/**/*.js", "src/**/*.css"], 
+      paths: ["src/**/*.html", "src/**/*.js", "src/**/*.css"],
     },
   },
   optimization: {
