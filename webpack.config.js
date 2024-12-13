@@ -4,7 +4,7 @@ const { CleanWebpackPlugin } = require("clean-webpack-plugin");
 const MiniCssExtractPlugin = require("mini-css-extract-plugin");
 
 module.exports = {
-  mode: "development", // Для автообновления нужен режим разработки
+  mode: "development", 
   entry: "./src/index.js",
   output: {
     filename: "bundle.[contenthash].js",
@@ -51,27 +51,27 @@ module.exports = {
     new HtmlWebpackPlugin({
       template: "./src/index.html",
       minify: {
-        collapseWhitespace: true, // Уменьшаем HTML для production
+        collapseWhitespace: true, 
       },
-      inject: "body", // Скрипт будет вставлен в конец body
+      inject: "body", 
     }),
     new MiniCssExtractPlugin({
       filename: "styles.[contenthash].css",
     }),
   ],
   devServer: {
-    static: "./dist", // Папка с результатами сборки
-    port: 8080, // Порт сервера
-    open: true, // Открытие браузера при запуске
-    hot: true, // Включение Hot Module Replacement (HMR)
-    liveReload: true, // Включение автообновления страницы при изменении файлов
+    static: "./dist", 
+    port: 8080,
+    open: true, 
+    hot: true, 
+    liveReload: true, 
     watchFiles: {
-      paths: ["src/**/*.html", "src/**/*.js", "src/**/*.css"], // Следим за изменениями в HTML, JS и CSS файлах
+      paths: ["src/**/*.html", "src/**/*.js", "src/**/*.css"], 
     },
   },
   optimization: {
     splitChunks: {
-      chunks: "all", // Разделение кода на чанки
+      chunks: "all",
     },
   },
 };
