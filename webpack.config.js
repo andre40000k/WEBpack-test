@@ -2,22 +2,47 @@ const path = require("path");
 const HtmlWebpackPlugin = require("html-webpack-plugin");
 const { CleanWebpackPlugin } = require("clean-webpack-plugin");
 const MiniCssExtractPlugin = require("mini-css-extract-plugin");
+const WebpackBundleAnalyzer = require("webpack-bundle-analyzer").BundleAnalyzerPlugin;
 
 module.exports = {
   mode: "development",
-  entry: "./src/index.js",
+  entry: "./src/index.ts",
   output: {
     filename: "bundle.[contenthash].js",
     path: path.resolve(__dirname, "dist"),
     assetModuleFilename: "assets/[name].[contenthash][ext]",
   },
+  resolve: {
+    extensions: [".ts", ".js", ".json"],
+  },
   module: {
     rules: [
+      {
+        test: /\.ts$/,
+        exclude: /node_modules/,
+        use: "ts-loader",
+      },
       {
         test: /\.css$/i,
         use: [
           process.env.NODE_ENV === "production" ? MiniCssExtractPlugin.loader : "style-loader",
           "css-loader",
+        ],
+      },
+      {
+        test: /\.(scss|sass)$/i,
+        use: [
+          process.env.NODE_ENV === "production" ? MiniCssExtractPlugin.loader : "style-loader",
+          "css-loader",
+          "sass-loader",
+        ],
+      },
+      {
+        test: /\.less$/i,
+        use: [
+          process.env.NODE_ENV === "production" ? MiniCssExtractPlugin.loader : "style-loader",
+          "css-loader",
+          "less-loader",
         ],
       },
       {
@@ -37,12 +62,7 @@ module.exports = {
       {
         test: /\.js$/,
         exclude: /node_modules/,
-        use: {
-          loader: "babel-loader",
-          options: {
-            presets: ["@babel/preset-env"],
-          },
-        },
+        use: "babel-loader",
       },
     ],
   },
@@ -58,16 +78,25 @@ module.exports = {
     new MiniCssExtractPlugin({
       filename: "styles.[contenthash].css",
     }),
+    new WebpackBundleAnalyzer({
+      analyzerMode: "static",
+      openAnalyzer: true,
+    }),
+    // new ESLintPlugin({
+    //   extensions: ["ts", "js"],
+    //   overrideConfigFile: path.resolve(__dirname, "eslint.config.js"),
+    // }),
   ],
+  stats: {
+    children: true,
+  },
   devServer: {
     static: "./dist",
     port: 8080,
     open: true,
     hot: true,
     liveReload: true,
-    watchFiles: {
-      paths: ["src/**/*.html", "src/**/*.js", "src/**/*.css"],
-    },
+    watchFiles: ["src/**/*"],
   },
   optimization: {
     splitChunks: {

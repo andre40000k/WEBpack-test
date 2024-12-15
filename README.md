@@ -31,3 +31,7 @@
 ```bash
     npm run build
 ```
+ запустить ESLint
+```bash
+    npm run lint
+```
